@@ -55,9 +55,19 @@ same whether VS Code starts the kernel in the notebook's folder or you launch
 
 ## Notes
 
-- Perch V2 is **not** amplitude-invariant. Each 5-second window must have its DC offset
-  removed and its peak scaled to 0.25 before inference — the notebook's `peak_normalize`
-  does this. Skipping it yields systematically low confidence scores.
+- Perch V2 is **not** amplitude-invariant, so **two preprocessing choices move the
+  scores**, and both are defaults of `perch-hoplite` rather than anything the Perch 2.0
+  paper documents (its Appendix A.2 specifies the frontend in detail and never mentions
+  either): `TARGET_PEAK = 0.25` (per-window DC removal + peak scaling, `peak_normalize`)
+  and `RESAMPLER = "polyphase"` (librosa's own default is `soxr_hq`; only matters when the
+  source is not already 32 kHz). Both are explicit constants in the notebook and are
+  recorded in `manifest.json`.
+- Measured here on a real 24 kHz recording (60 windows, top-1 species per window): each
+  stage moves the top confidence by **~0.02–0.04 mean |Δ|** (up to ~0.17 on one window),
+  and **they interact** — neither is "the dominant" cause of a disagreement with another
+  tool, so match *both* before drawing conclusions. Normalizing **lowers** the score in
+  ~82 % of windows and raises it where the window's peak already exceeded 0.25 — the
+  common claim that skipping it gives "systematically low" scores is backwards.
 - The model's window is fixed at **5 s** (the signature is `(None, 160000)`); only the
   *hop* between windows is tunable.
 - `data/recordings/` currently holds **symlinks** to the 30 PIC02/PIC03 recordings in the
