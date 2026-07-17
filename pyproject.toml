@@ -21,6 +21,13 @@ dependencies = [
     "ipykernel>=6.29",
 ]
 
+[dependency-groups]
+# Local tooling, not needed to run the notebooks. `uv sync` installs this group by
+# default, which is the point: the git clean-filter below shells out to nbstripout, so
+# a `uv sync` that dropped it would silently stop stripping outputs and let real
+# fieldwork (absolute paths, recording filenames, detection counts) back into commits.
+dev = ["nbstripout>=0.8"]
+
 [tool.uv]
 # This project is just notebooks — there is no package to build.
 package = false
