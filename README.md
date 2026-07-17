@@ -42,11 +42,11 @@ export KAGGLE_API_TOKEN=KGAT_xxxxxxxxxxxxxxxxxxxxxxxx
 
 ```
 Perch_notebooks/
-  00_species_identification_guided.ipynb   Run Perch over recordings -> detections CSV.
-  pyproject.toml                           Dependencies (uv).
+  species_ID.ipynb               Run Perch over recordings -> detections CSV.
+  pyproject.toml                 Dependencies (uv).
   data/
-    recordings/                            Put your audio here (searched recursively).
-    outputs/                               Written by the notebooks.
+    recordings/                  Put your audio here (searched recursively).
+    outputs/                     Written by the notebooks.
 ```
 
 Paths inside the notebook anchor to the folder containing `data/`, so they resolve the
