@@ -1,0 +1,11 @@
+# Python environment
+.venv/
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data: recordings are inputs, outputs are generated — neither belongs in git
+data/recordings/
+data/outputs/

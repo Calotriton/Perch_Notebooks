@@ -1,0 +1,30 @@
+[project]
+name = "perch-notebooks"
+version = "0.1.0"
+description = "Standalone Jupyter notebooks that run Google Perch V2 directly from Kaggle."
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+
+dependencies = [
+    # Perch V2 is a TensorFlow SavedModel; the notebooks call it directly.
+    "tensorflow>=2.20,<3.0",
+    # Model download from Kaggle. >=1.0 is required for modern KGAT access tokens.
+    "kagglehub>=1.0,<2.0",
+    # Audio loading / resampling / framing.
+    "librosa>=0.11,<0.12",
+    "soundfile>=0.12",
+    # Data handling. pandas is capped below 3.0: the notebooks are tested on 2.x.
+    "numpy>=2.0",
+    "pandas>=2.1,<3.0",
+    # Jupyter itself.
+    "notebook>=7.4,<8.0",
+    "ipykernel>=6.29",
+]
+
+[tool.uv]
+# This project is just notebooks — there is no package to build.
+package = false
+# librosa requires `numba` with no lower bound, and uv's universal resolution
+# otherwise degrades to numba 0.53.1 — an sdist that only builds on Python <3.10.
+# Floor it at 0.60 (the first numba with numpy 2.x support).
+constraint-dependencies = ["numba>=0.60"]
