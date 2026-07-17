@@ -9,3 +9,8 @@ __pycache__/
 # Data: recordings are inputs, outputs are generated — neither belongs in git
 data/recordings/
 data/outputs/
+
+# Claude's local memory. The logs are symlinks into the sibling PerchLab project
+# (single source of truth) and are git-ignored there too — local context, not shipped.
+.claude/
+CLAUDE.md
