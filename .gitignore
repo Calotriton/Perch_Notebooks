@@ -6,9 +6,12 @@ __pycache__/
 # Jupyter
 .ipynb_checkpoints/
 
-# Data: recordings are inputs, outputs are generated — neither belongs in git
+# Data: recordings are inputs, outputs are generated — neither belongs in git.
+# data/validated/ holds the hand-sorted correct/incorrect clips the threshold notebook
+# fits on: real fieldwork, and the most laborious thing in the repo to reproduce.
 data/recordings/
 data/outputs/
+data/validated/
 
 # Claude's local memory. The logs are symlinks into the sibling PerchLab project
 # (single source of truth) and are git-ignored there too — local context, not shipped.

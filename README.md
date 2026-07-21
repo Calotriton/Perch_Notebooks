@@ -43,15 +43,31 @@ export KAGGLE_API_TOKEN=KGAT_xxxxxxxxxxxxxxxxxxxxxxxx
 ```
 Perch_notebooks/
   species_ID.ipynb               Run Perch over recordings -> detections CSV.
+  optimal_threshold.ipynb        Fit a per-species confidence cutoff -> thresholds CSV.
   pyproject.toml                 Dependencies (uv).
   data/
     recordings/                  Put your audio here (searched recursively).
+    validated/                   Clips you listened to, sorted correct/ vs incorrect/.
     outputs/                     Written by the notebooks.
 ```
 
-Paths inside the notebook anchor to the folder containing `data/`, so they resolve the
+Paths inside the notebooks anchor to the folder containing `data/`, so they resolve the
 same whether VS Code starts the kernel in the notebook's folder or you launch
 `jupyter lab` from elsewhere.
+
+The two notebooks are a loop, and run in order:
+
+1. `species_ID.ipynb` scores recordings at a deliberately **low** threshold and, with
+   `EXTRACT_SEGMENTS = True`, cuts a confidence-balanced sample of clips.
+2. You listen to those clips and sort them into `correct/` and `incorrect/`.
+3. `optimal_threshold.ipynb` fits a logistic regression per species (Wood et al. 2023)
+   and solves for the confidence at which a detection is correct 95 % of the time.
+4. You filter step 1's `all_detections.csv` per species using that table.
+
+A single global cutoff cannot do step 4: it is either too strict for the species Perch
+finds hard, or too loose for the ones it finds easy. **Both notebooks must use the same
+`RESAMPLER` and `TARGET_PEAK`** — a threshold is only valid for the pipeline that
+produced the scores, which is why each notebook writes them into its `manifest.json`.
 
 ## Notes
 

@@ -16,6 +16,11 @@ dependencies = [
     # Data handling. pandas is capped below 3.0: the notebooks are tested on 2.x.
     "numpy>=2.0",
     "pandas>=2.1,<3.0",
+    # The threshold notebook's logistic fit and its plot. scikit-learn already arrives
+    # as a librosa dependency, but declare it: a notebook that imports a package should
+    # not depend on another package continuing to want it.
+    "scikit-learn>=1.4",
+    "matplotlib>=3.6",
     # Jupyter itself.
     "notebook>=7.4,<8.0",
     "ipykernel>=6.29",
